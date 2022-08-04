@@ -1,0 +1,38 @@
+.container{
+  //margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form{
+  text-align: center;
+  //justify-content: center;
+  padding: 30px;
+}
+
+mat-form-field{
+  width: 60%;
+}
+
+.buttons{
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+button{
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 30%;
+}
+//button{
+//  margin: 20px;
+//  text-align: center;
+//}
+
+p{
+margin-top: 40px;
+}
+
