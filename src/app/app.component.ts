@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
+import {MapComponent} from "./map/map.component";
+import {pipe} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -8,50 +11,52 @@ import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/fo
 })
 export class AppComponent implements OnInit {
 
-  static phone_mask = ['(', /[1-9]/, /\d/, /\d/, ')', '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-
-  registationForm!: FormGroup;
+  registrationForm!: FormGroup;
+  address = '';
   title = 'test-task-teleform';
-  step = 1;
 
-  constructor(private fb: FormBuilder) {
+  get formArray(): AbstractControl | null { return this.registrationForm.get('formArray'); }
+
+  constructor(private fb: FormBuilder, public dialog: MatDialog) {
   }
 
   ngOnInit(): void{
     this.createForm();
   }
 
+
   createForm(): void{
-    this.registationForm = this.fb.group({
+    this.registrationForm = this.fb.group({
+      formArray: this.fb.array([
+      this.fb.group({
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
+    }),
+      this.fb.group({
       email: new FormControl('', [Validators.email, Validators.required]),
-      phone: new FormControl('',[Validators.required, Validators.pattern('^[+][0-9]([0-9]{10})')]),
+      phone: new FormControl('',[Validators.required, Validators.pattern('^([+][0-9])|([0-9])([0-9]{10})')]),
+      address: new FormControl('', [Validators.required]),
       date: new FormControl('', Validators.required),
-      agree: new FormControl(null, Validators.required),
-      mailing: new FormControl(null, Validators.nullValidator),
+    }),
+      this.fb.group({
+      agree: new FormControl(false, Validators.requiredTrue),
+      mailing: new FormControl(false, Validators.nullValidator),
+    })
+      ])
+
     })
   }
 
 
-  nextStep(): void{
-    if(this.step+1>3){
-      this.step =3;
-      return;
-    }
-    this.step++;
-  }
 
-  previousStep(): void{
-    if(this.step-1<1){
-      this.step = 1;
-      return
-    }
-    this.step--;
+
+  openMap(){
+    let dialog = this.dialog.open(MapComponent);
+    dialog.afterClosed().subscribe(pipe((result: string)=>this.address = result, ()=>this.registrationForm.get('formArray.1.address')?.patchValue(this.address)));
   }
 
   sendForm():void{
-    console.log(this.registationForm.value);
+    console.log(this.registrationForm.value);
   }
 
 

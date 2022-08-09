@@ -1,73 +1,87 @@
 <div class="container">
 
-<!-- form stage 1-->
-  <form novalidate [formGroup]="registationForm">
-  <div *ngIf="step==1" class="form">
-  <p>
-    <mat-form-field>
-      <mat-label>Имя</mat-label>
-      <input formControlName="name" matInput placeholder="Сергей" type="text">
-    </mat-form-field>
-  </p>
+  <form novalidate [formGroup]="registrationForm" class="form">
+    <mat-horizontal-stepper linear formArrayName="formArray">
+      <!-- form stage 1-->
+      <mat-step  formGroupName="0" label="Как вас зовут" [stepControl]="formArray?.get([0])!"  >
+        <div>
+          <p>
+            <mat-form-field>
+              <mat-label>Имя</mat-label>
+              <input formControlName="name" matInput placeholder="Сергей" type="text">
+            </mat-form-field>
+          </p>
 
-  <p>
-  <mat-form-field>
-    <mat-label>Фамилия</mat-label>
-    <input formControlName="surname" matInput placeholder="Сергеев" type="text">
-  </mat-form-field>
-  </p>
-  </div>
+          <p>
+            <mat-form-field>
+              <mat-label>Фамилия</mat-label>
+              <input formControlName="surname" matInput placeholder="Сергеев" type="text">
+            </mat-form-field>
+          </p>
+          <button mat-raised-button matStepperNext>Next</button>
+        </div>
+      </mat-step>
 
+      <!--form stage 2-->
+      <mat-step formGroupName="1" label="Личные данные" [stepControl]="formArray?.get([1])!">
+        <div>
+          <!--email-->
+          <p>
+             <mat-form-field>
+               <mat-label>Почта</mat-label>
+               <input formControlName="email" matInput placeholder="mail@mail.ru">
+             </mat-form-field>
+          </p>
+          <!--Phone-->
+          <p>
+            <mat-form-field>
+              <mat-label>Номер телефона</mat-label>
+              <input formControlName="phone" matInput>
+            </mat-form-field>
+          </p>
+          <!--Map start-->
+          <p>
+            <mat-form-field>
+              <mat-label>Адрес</mat-label>
+              <input formControlName="address" matInput (click)="openMap()" type="text">
+            </mat-form-field>
+          </p>
+          <!--Map ends -->
 
-<!--form stage 2-->
-  <div *ngIf="step==2" class="form">
-    <!--email-->
-    <p>
-      <mat-form-field>
-        <mat-label>Почта</mat-label>
-        <input formControlName="email" matInput placeholder="mail@mail.ru">
-      </mat-form-field>
-    </p>
-    <!--Phone-->
-    <p>
-      <mat-form-field>
-        <mat-label>Номер телефона</mat-label>
-        <input formControlName="phone" matInput>
-      </mat-form-field>
-    </p>
-    <!--Map start-->
+          <!--date picker-->
+          <p>
+             <mat-form-field>
+               <mat-label>Выберете дату и время </mat-label>
+               <input matInput formControlName="date"  type="datetime-local">
+             </mat-form-field>
+          </p>
 
-    <!--Map ends -->
+        </div>
 
-    <!--date picker-->
-    <p>
-      <mat-label>Choose a date</mat-label>
-      <input matInput formControlName="date" [matDatepicker]="picker">
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </p>
-    <!--/date picker-->
-  </div>
+        <div class="buttons">
+          <button mat-raised-button matStepperPrevious>Back</button>
+          <button mat-raised-button matStepperNext>Next</button>
+        </div>
 
-<!--form stage 3-->
-  <div *ngIf="step==3">
-    <p>
-      <mat-checkbox formControlName="agree">Подтверждаю согласие на обработку персональных данных</mat-checkbox>
-    </p>
-    <p>
-      <mat-checkbox formControlName="mailing">Оповещать, если по данному адресу найдены происшествия</mat-checkbox>
-    </p>
-  </div>
+      </mat-step>
 
-  <div class="buttons">
-  <button mat-raised-button (click)="previousStep()" [disabled]="step==1">Предыдущий этап</button>
+      <!--form stage 3-->
+      <mat-step  formGroupName="2" [stepControl]="formArray?.get([2])!" label="Согласие на обработку">
+        <div>
+          <p>
+            <mat-checkbox formControlName="agree">Подтверждаю согласие на обработку персональных данных</mat-checkbox>
+          </p>
+          <p>
+            <mat-checkbox formControlName="mailing">Оповещать, если по данному адресу найдены происшествия</mat-checkbox>
+          </p>
+        </div>
+        <div class="buttons" >
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-raised-button (click)="sendForm()" [disabled]="registrationForm.invalid">Отправить</button>
+        </div>
+      </mat-step>
 
-  <button mat-raised-button (click)="nextStep()">Следующий этап</button>
-
-
-  <button mat-raised-button (click)="sendForm()" [disabled]="registationForm.invalid">Отправить форму</button>
-
-  </div>
+    </mat-horizontal-stepper>
   </form>
 </div>
+
