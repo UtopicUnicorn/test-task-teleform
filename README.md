@@ -11,7 +11,7 @@ $ git clone git@github.com:UtopicUnicorn/test-task-teleform.git
 $ npm install
 ```
 
-## Для работы карт неообходимо изменить токен в компоненте карт
+## Для работы карт неообходимо изменить токен в компоненте карт (map.component.ts)
 ```
 apiKey: API_KEY
 ```
