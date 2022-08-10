@@ -1,27 +1,32 @@
-# TestTaskTeleform
+## Тестовое задание Телеформ ИС
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+## Загрузка репозитория
+```bash
+$ git clone git@github.com:UtopicUnicorn/test-task-teleform.git
+```
+## Переход в директорю с проектом
 
-## Development server
+## Установка
+```bash
+$ npm install
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Для работы карт неообходимо изменить токен в компоненте карт
+```
+apiKey: API_KEY
+```
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+## Запуск приложения
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+$ ng serve
+```
 
-## Running unit tests
+## Возможные доработки
+1. Убрать лишние элементы google карт
+2. Отключать кнопки, если этап формы до конца не завершен
+3. Добавить адаптивность интерфейса
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
