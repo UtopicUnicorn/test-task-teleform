@@ -105,9 +105,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "test-task-teleform"
+  "defaultProject": "test-task-teleform",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
